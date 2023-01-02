@@ -1,4 +1,4 @@
-describe('Technical task #1', () => {
+describe('Technical task 1', () => {
   const articleTitle = 'Test-46';
   const articleDesc = 'description';
   const articleBody = 'article';
