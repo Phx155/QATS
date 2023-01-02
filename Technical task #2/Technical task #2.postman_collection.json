@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "045f829a-dbb3-4f91-873b-0bcacbdecf17",
+		"name": "Technical task #2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4976213"
+	},
+	"item": [
+		{
+			"name": "Test Case 1 – GET - List Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string [total]\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"\\\"total\\\":12\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string [last_name]_1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].last_name).to.eql('Lawson');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string [last_name]_2\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[1].last_name).to.eql('Ferguson');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body length comapre to total\", function () {\r",
+							"    var jsonData = pm.response.json().data;\r",
+							"    var totalCount = pm.response.json().total;\r",
+							"    pm.expect(jsonData.length).to.equal(totalCount)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body length comapre to per_page\", function () {\r",
+							"    var jsonData = pm.response.json().data;\r",
+							"    var per_page = pm.response.json().per_page;\r",
+							"    pm.expect(jsonData.length).to.equal(per_page)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Case 2 – POST – Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string [id]\", function () {\r",
+							"    pm.expect(pm.response.text()).to.match(/\"id\":\".*\"/);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string [createdAt]\", function () {\r",
+							"    pm.expect(pm.response.text()).to.match(/\"createdAt\":\"2023-.*\"/);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 100ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
